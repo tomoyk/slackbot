@@ -1,0 +1,40 @@
+frameworkVersion: "3"
+service: tmykbot-slack
+provider:
+  name: aws
+  # See also https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html
+  runtime: python3.11
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        # For Lazy Listeners
+        - Effect: Allow
+          Action:
+            - lambda:InvokeFunction
+            - lambda:InvokeAsync
+          Resource: "*"
+  environment:
+    SERVERLESS_STAGE: ${opt:stage, 'prod'}
+    SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
+
+functions:
+  app:
+    handler: main.lambda_handler
+    events:
+      - httpApi:
+          path: /slack/events
+          method: post
+
+package:
+  patterns:
+    - "!.venv/**"
+    - "!node_modules/**"
+    - "!.idea/**"
+
+plugins:
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+    zip: true
+    slim: true

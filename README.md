@@ -69,6 +69,8 @@ settings:
 
 ### Deploy a bot to Lambda
 
+[Bolt for Python + AWS Lambda & S3 で運用するほぼゼロコスト Slack アプリ #Slack - Qiita](https://qiita.com/seratch/items/12b39d636daf8b1e5fbf#aws-lambda-%E7%92%B0%E5%A2%83%E3%81%AB%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%81%97%E3%81%A6%E5%8B%95%E4%BD%9C%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B)
+
 Install serverless framework
 
 ```
@@ -79,4 +81,10 @@ Install plugins for serverless framework
 
 ```
 serverless plugin install -n serverless-python-requirements
+```
+
+Deploy bot app
+
+```
+serverless deploy
 ```
