@@ -66,3 +66,17 @@ settings:
   socket_mode_enabled: false
   token_rotation_enabled: false
 ```
+
+### Deploy a bot to Lambda
+
+Install serverless framework
+
+```
+npm install -g serverless
+```
+
+Install plugins for serverless framework
+
+```
+serverless plugin install -n serverless-python-requirements
+```
