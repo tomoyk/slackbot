@@ -10,8 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 # Slack App Config
 app = App(
     token=os.getenv("SLACK_BOT_TOKEN"),
-    signing_secret=os.getenv("SLACK_SIGNING_SECRET"),
-    process_before_response=True,
+    process_before_response=True,  # Required for Lambda
 )
 
 
@@ -28,15 +27,10 @@ def handle_message(message, say, context):
         say(reply)
 
 
-# @app.message("hello")
-# def message_hello(message, say):
-#     say(f"Hey there <@{message['user']}>!")
-
 if __name__ == "__main__":
-    from slack_bolt.adapter.socket_mode import SocketModeHandler
+    app.start()
 
-    SocketModeHandler(app, os.getenv("SLACK_APP_TOKEN")).start()
-
+# Required for Lambda
 from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 
 # Logging for AWS Lambda
