@@ -14,6 +14,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Slack App Config
 app = App(
+    signing_secret=os.getenv("SLACK_SIGNING_SECRET"), # Required for Event Subscription
     token=os.getenv("SLACK_BOT_TOKEN"),
     process_before_response=True,  # Required for Lambda
 )

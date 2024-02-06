@@ -26,11 +26,12 @@ provider:
   environment:
     SERVERLESS_STAGE: ${opt:stage, 'prod'}
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
+    SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
 
 functions:
   app:
     handler: main.lambda_handler
-    url: true
+    # url: true
     events:
       - httpApi:
           path: /slack/events
