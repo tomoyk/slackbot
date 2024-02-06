@@ -30,6 +30,7 @@ provider:
 functions:
   app:
     handler: main.lambda_handler
+    url: true
     events:
       - httpApi:
           path: /slack/events
@@ -37,9 +38,11 @@ functions:
 
 package:
   patterns:
-    - "!.venv/**"
+    - "!env/**"
     - "!node_modules/**"
     - "!.idea/**"
+    - "!local-test.sh"
+    - "!package*.json"
 
 plugins:
   - serverless-python-requirements
