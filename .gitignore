@@ -1,4 +1,5 @@
 local-test.sh
+.requirements.zip
 
 # Logs
 logs
