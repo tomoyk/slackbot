@@ -67,16 +67,16 @@ def word_not_found(text, say):
 
 
 @app.message(re.compile("!word ([^ ]+)"))
-def word_handler(message, say, context):
+def get_word_handler(message, say, context):
     for matched_text in context["matches"]:
         try:
-            response = table.get_item(Key={"alias": matched_text})
+            response = table.get_item(Key={"alias": "word_" + matched_text})
             if (item := response.get("Item")) is None:  # Key does not exist
                 word_not_found(text=matched_text, say=say)
                 continue
 
             # Key exists
-            if (desc := item.get("description")) is None:
+            if (desc := item.get("desc")) is None:
                 word_not_found(text=matched_text, say=say)
                 continue
 
@@ -89,6 +89,27 @@ def word_handler(message, say, context):
             say("Error:" + e)
             continue
 
+
+@app.message(re.compile("!add_word ([^, ]+,.+)"))
+def add_word_handler(message, say, context):
+    for matched_text in context["matches"]:
+        try:
+            # print(f"{matched_text=}")
+            divided = matched_text.split(",")
+            keyword = divided[0]
+            desc = ",".join(divided[1:])
+            # TODO: ReadしないとCountが消える
+            table.put_item(
+                Item={
+                    "alias":"word_" + keyword,
+                    "desc": desc,
+                }
+            )
+            say("覚えたよ!")
+        except Exception as e:
+            print(e)
+            say("Error:" + e)
+            continue
 
 if __name__ == "__main__":
     app.start()
